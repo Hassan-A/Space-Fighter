@@ -1,3 +1,18 @@
-[gd_scene format=3 uid="uid://csykuhqbj2bjr"]
+[gd_scene load_steps=3 format=3 uid="uid://csykuhqbj2bjr"]
+
+[ext_resource type="Texture2D" uid="uid://c57lfea64d7qp" path="res://Sprites/Spaceship_04_BLUE.png" id="1_u8jm7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4klyp"]
+size = Vector2(153, 142)
 
 [node name="Node2D" type="Node2D"]
+
+[node name="player" type="CharacterBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
+position = Vector2(0.5, -2)
+shape = SubResource("RectangleShape2D_4klyp")
+
+[node name="Sprite2D" type="Sprite2D" parent="player"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_u8jm7")
