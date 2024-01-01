@@ -35,4 +35,8 @@ func _physics_process(delta):
 		var moveInY = cos(deg_to_rad(degree)) * yDirection
 		direction = Vector2(moveInX,moveInY)
 	
+	velocity = (velocity * 0.9) + direction * SPEED
+	if((velocity.x < 1 and velocity.x > -1) and (velocity.y < 1 and velocity.y > -1)):
+		velocity *= 0
+	
 	move_and_slide()
