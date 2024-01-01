@@ -1,20 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://csykuhqbj2bjr"]
+[gd_scene load_steps=2 format=3 uid="uid://csykuhqbj2bjr"]
 
-[ext_resource type="Script" path="res://Scenes/player.gd" id="1_a2a6e"]
-[ext_resource type="Texture2D" uid="uid://c57lfea64d7qp" path="res://Sprites/Spaceship_04_BLUE.png" id="1_u8jm7"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4klyp"]
-size = Vector2(153, 142)
+[ext_resource type="PackedScene" uid="uid://b2icotkbwu454" path="res://Prefabs/player.tscn" id="1_uefnv"]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="player" type="CharacterBody2D" parent="."]
-script = ExtResource("1_a2a6e")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
-position = Vector2(0.5, -2)
-shape = SubResource("RectangleShape2D_4klyp")
-
-[node name="Sprite2D" type="Sprite2D" parent="player"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_u8jm7")
+[node name="player" parent="." instance=ExtResource("1_uefnv")]
