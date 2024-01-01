@@ -31,6 +31,8 @@ func _physics_process(delta):
 			yDirection = -1
 	
 	if Input.is_action_pressed("ui_up"):
-		direction = Vector2(0,-1)
-	velocity = direction * SPEED
+		var moveInX = sin(deg_to_rad(degree)) * xDirection
+		var moveInY = cos(deg_to_rad(degree)) * yDirection
+		direction = Vector2(moveInX,moveInY)
+	
 	move_and_slide()
