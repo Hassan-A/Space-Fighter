@@ -4,15 +4,15 @@
 [ext_resource type="Texture2D" uid="uid://c57lfea64d7qp" path="res://Sprites/Spaceship_04_BLUE.png" id="2_xe4wa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4klyp"]
-size = Vector2(153, 142)
+size = Vector2(73, 71)
 
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_1adlk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, -2)
+position = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_4klyp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_xe4wa")
