@@ -1,9 +1,13 @@
 extends CharacterBody2D
 
+var bulletSceen : PackedScene
 const SPEED = 20
 var degree = 0
 var xDirection = 1
 var yDirection = -1
+
+func _ready():
+	bulletSceen = preload("res://Prefabs/bullet.tscn")
 
 func _physics_process(delta):
 	var direction = Vector2(0,0)
@@ -34,6 +38,17 @@ func _physics_process(delta):
 		var moveInX = sin(deg_to_rad(degree)) * xDirection
 		var moveInY = cos(deg_to_rad(degree)) * yDirection
 		direction = Vector2(moveInX,moveInY)
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		#instatiate bullet
+		var b = bulletSceen.instantiate()
+		emit_signal("add_bullet",b)
+		b.position = position
+		b.rotation = rotation
+		var moveInX = sin(deg_to_rad(degree)) * xDirection
+		var moveInY = cos(deg_to_rad(degree)) * yDirection
+		var d = Vector2(moveInX,moveInY)
+		b.create(d)
 	
 	velocity = (velocity * 0.9) + direction * SPEED
 	if((velocity.x < 1 and velocity.x > -1) and (velocity.y < 1 and velocity.y > -1)):
