@@ -10,7 +10,5 @@ func _physics_process(_delta):
 func create(dir):
 	direction = dir
 
-
-
 func _on_visible_on_screen_notifier_2d_screen_exited():
-	pass # Replace with function body.
+	queue_free()
