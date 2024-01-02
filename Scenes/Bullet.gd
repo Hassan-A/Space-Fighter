@@ -1,15 +1,6 @@
 extends CharacterBody2D
-const SPEED = 100.0
+const SPEED = 500.0
 var direction = Vector2(0,0)
-
-func _ready():
-	print("ready")
-
-func _enter_tree():
-	print("init")
-
-func _process(_delta):
-	print("process")
 
 func _physics_process(_delta):
 	velocity = direction * SPEED
@@ -17,5 +8,9 @@ func _physics_process(_delta):
 	move_and_slide()
 
 func create(dir):
-	print("bullet created")
 	direction = dir
+
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	pass # Replace with function body.
