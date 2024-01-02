@@ -5,6 +5,7 @@ const SPEED = 20
 var degree = 0
 var xDirection = 1
 var yDirection = -1
+signal add_bullet
 
 func _ready():
 	bulletSceen = preload("res://Prefabs/bullet.tscn")
@@ -45,6 +46,7 @@ func _physics_process(delta):
 		emit_signal("add_bullet",b)
 		b.position = position
 		b.rotation = rotation
+		print(b , " b.position: " , b.position)
 		var moveInX = sin(deg_to_rad(degree)) * xDirection
 		var moveInY = cos(deg_to_rad(degree)) * yDirection
 		var d = Vector2(moveInX,moveInY)

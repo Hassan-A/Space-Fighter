@@ -8,6 +8,8 @@ radius = 5.0
 height = 44.0
 
 [node name="Bullet" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 4
 script = ExtResource("1_ki50n")
 
 [node name="bulletsprite" type="Sprite2D" parent="."]

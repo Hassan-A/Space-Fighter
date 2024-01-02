@@ -1,11 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://csykuhqbj2bjr"]
+[gd_scene load_steps=2 format=3 uid="uid://csykuhqbj2bjr"]
 
-[ext_resource type="PackedScene" uid="uid://ce7x0gxo0u3hd" path="res://Prefabs/bullet.tscn" id="1_j7b8w"]
-[ext_resource type="PackedScene" uid="uid://b2icotkbwu454" path="res://Prefabs/player.tscn" id="1_uefnv"]
+[ext_resource type="Script" path="res://Scenes/Main.gd" id="1_3xcx5"]
 
 [node name="Node2D" type="Node2D"]
-
-[node name="Bullet" parent="." instance=ExtResource("1_j7b8w")]
-
-[node name="player" parent="." instance=ExtResource("1_uefnv")]
-position = Vector2(217, 205)
+script = ExtResource("1_3xcx5")
