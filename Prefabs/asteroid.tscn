@@ -1,5 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://c04bjm5ocxtb7"]
+[gd_scene load_steps=14 format=3 uid="uid://c04bjm5ocxtb7"]
 
+[ext_resource type="Script" path="res://scripts/asteroid.gd" id="1_sr0yn"]
 [ext_resource type="Texture2D" uid="uid://b0sngjmcvnk68" path="res://Sprites/Asteroid 01 - Explode.png" id="1_uc1ui"]
 [ext_resource type="Texture2D" uid="uid://drojpfxdej27f" path="res://Sprites/Asteroid 01 - Base.png" id="2_d050q"]
 
@@ -79,6 +80,7 @@ animations = [{
 radius = 19.0263
 
 [node name="asteroid" type="StaticBody2D"]
+script = ExtResource("1_sr0yn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_qqfup")
