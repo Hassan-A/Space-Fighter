@@ -1,0 +1,87 @@
+[gd_scene load_steps=13 format=3 uid="uid://c04bjm5ocxtb7"]
+
+[ext_resource type="Texture2D" uid="uid://b0sngjmcvnk68" path="res://Sprites/Asteroid 01 - Explode.png" id="1_uc1ui"]
+[ext_resource type="Texture2D" uid="uid://drojpfxdej27f" path="res://Sprites/Asteroid 01 - Base.png" id="2_d050q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xq77k"]
+atlas = ExtResource("1_uc1ui")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i0ulw"]
+atlas = ExtResource("1_uc1ui")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pieyq"]
+atlas = ExtResource("1_uc1ui")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxvis"]
+atlas = ExtResource("1_uc1ui")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lsw2u"]
+atlas = ExtResource("1_uc1ui")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1s8vu"]
+atlas = ExtResource("1_uc1ui")
+region = Rect2(480, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xqeyy"]
+atlas = ExtResource("1_uc1ui")
+region = Rect2(576, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_st4qs"]
+atlas = ExtResource("1_uc1ui")
+region = Rect2(672, 0, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qqfup"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xq77k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i0ulw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pieyq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxvis")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lsw2u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1s8vu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xqeyy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_st4qs")
+}],
+"loop": true,
+"name": &"Expload",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_d050q")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1ljms"]
+
+[node name="asteroid" type="StaticBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_qqfup")
+animation = &"Idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1ljms")
