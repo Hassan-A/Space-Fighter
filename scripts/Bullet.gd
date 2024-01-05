@@ -6,6 +6,12 @@ func _physics_process(_delta):
 	velocity = direction * SPEED
 	print("move bullet ", velocity)
 	move_and_slide()
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		if(collision.get_collider().get_collision_layer() == 6 && !is_queued_for_deletion()):
+			collision.get_collider().explode()
+			collision.get_collider().add_score()
+			queue_free()
 
 func create(dir):
 	direction = dir
