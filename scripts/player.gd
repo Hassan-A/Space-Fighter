@@ -1,7 +1,6 @@
 extends CharacterBody2D
-
 var bulletSceen : PackedScene
-const SPEED = 20
+const SPEED = 10.0
 var degree = 0
 var xDirection = 1
 var yDirection = -1
@@ -9,8 +8,8 @@ signal add_bullet
 
 func _ready():
 	bulletSceen = preload("res://Prefabs/bullet.tscn")
-
 func _physics_process(delta):
+	# Handle Jump.
 	var direction = Vector2(0,0)
 	
 	var rot = Input.get_axis("ui_left", "ui_right")
@@ -46,14 +45,19 @@ func _physics_process(delta):
 		emit_signal("add_bullet",b)
 		b.position = position
 		b.rotation = rotation
-		print(b , " b.position: " , b.position)
 		var moveInX = sin(deg_to_rad(degree)) * xDirection
 		var moveInY = cos(deg_to_rad(degree)) * yDirection
 		var d = Vector2(moveInX,moveInY)
 		b.create(d)
+		#play sound
 	
 	velocity = (velocity * 0.9) + direction * SPEED
+	
 	if((velocity.x < 1 and velocity.x > -1) and (velocity.y < 1 and velocity.y > -1)):
 		velocity *= 0
-	
+		
 	move_and_slide()
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		if(collision.get_collider().get_collision_layer() == 6):
+			collision.get_collider().explode()
