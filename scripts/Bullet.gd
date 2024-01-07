@@ -1,10 +1,10 @@
 extends CharacterBody2D
+
 const SPEED = 500.0
 var direction = Vector2(0,0)
-
-func _physics_process(_delta):
+func _physics_process(delta):
 	velocity = direction * SPEED
-	print("move bullet ", velocity)
+	
 	move_and_slide()
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)

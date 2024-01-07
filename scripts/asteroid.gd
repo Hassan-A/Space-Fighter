@@ -5,8 +5,10 @@ extends StaticBody2D
 var direction = Vector2(0,0)
 const SPEED = 150.0
 @export var sprite : AnimatedSprite2D
+@export var explodeSound : AudioStreamPlayer
 @export var colShape : CollisionShape2D
 signal destroyed
+signal addScore
 func _ready():
 	pass # Replace with function body.
 
@@ -25,7 +27,12 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 func explode():
 	colShape.disabled = true
 	sprite.play("Explode")
+	explodeSound.play()
 	emit_signal("destroyed", self)
+
+func add_score():
+	emit_signal("addScore")
+
 
 func _on_animated_sprite_2d_animation_finished():
 	queue_free()

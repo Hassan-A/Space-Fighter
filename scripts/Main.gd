@@ -97,7 +97,26 @@ func asteroidGone(ast):
 func add_score():
 	score += 1
 
+func _on_timer_timeout():
+	game_over()
+
+func game_over():
+	timer.stop()
+	set_process(false)
+	endScoreLabel.text = "Score: " + str(score)
+	set_visiblity(endDisplay,true)
+	player.queue_free()
+	for ast in astroidDict:
+		ast.queue_free()
+		astroidCount -= 1
+	astroidDict.clear()
+	#display button to main menu
+
 func _on_gomenu_button_up():
 	playSound.play()
 	backgroundSound.stop()
 	start_menu()
+
+
+func _on_background_music_finished():
+	backgroundSound.play()

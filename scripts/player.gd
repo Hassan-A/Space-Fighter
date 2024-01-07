@@ -4,6 +4,7 @@ const SPEED = 10.0
 var degree = 0
 var xDirection = 1
 var yDirection = -1
+signal game_over
 signal add_bullet
 
 func _ready():
@@ -61,3 +62,4 @@ func _physics_process(delta):
 		var collision = get_slide_collision(i)
 		if(collision.get_collider().get_collision_layer() == 6):
 			collision.get_collider().explode()
+			emit_signal("game_over")
