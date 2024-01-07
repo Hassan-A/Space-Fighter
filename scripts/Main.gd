@@ -13,7 +13,7 @@ extends Node2D
 @export var spaceShipFireSound : AudioStreamPlayer
 @export var playerScene : Resource
 @export var asteroidScene : Resource
-@export var initialTime : int
+@export var initialTime : int = 60
 var player : CharacterBody2D
 var random = RandomNumberGenerator.new()
 var score = 0

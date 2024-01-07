@@ -1,13 +1,249 @@
-[gd_scene load_steps=4 format=3 uid="uid://csykuhqbj2bjr"]
+[gd_scene load_steps=15 format=3 uid="uid://csykuhqbj2bjr"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_3xcx5"]
+[ext_resource type="PackedScene" uid="uid://b2icotkbwu454" path="res://Prefabs/player.tscn" id="2_ajqml"]
 [ext_resource type="Texture2D" uid="uid://b2n6wqlnjty5x" path="res://Sprites/Nebula Aqua-Pink.png" id="2_e1jkw"]
-[ext_resource type="PackedScene" uid="uid://buec6hwl16oxf" path="res://Prefabs/main_menu.tscn" id="3_neka4"]
+[ext_resource type="PackedScene" uid="uid://be2k6iy3m1qbb" path="res://Prefabs/asteroid.tscn" id="3_xmfx8"]
+[ext_resource type="Texture2D" uid="uid://bl6g5xmx2oea0" path="res://Sprites/Play_BTN.png" id="5_5evu4"]
+[ext_resource type="AudioStream" uid="uid://ck150k6n20jb4" path="res://Sounds/AMBIENCE_TUNNEL_WIND_LOOP.wav" id="5_fdfws"]
+[ext_resource type="Texture2D" uid="uid://dfgin44xskwus" path="res://Sprites/Menu_BTN.png" id="6_ir0ix"]
+[ext_resource type="Texture2D" uid="uid://b0qxmcpyn1lqk" path="res://Sprites/Play_BTN_active.png" id="6_vypgd"]
+[ext_resource type="Texture2D" uid="uid://dstiukm6irxe3" path="res://Sprites/Menu_BTN_active.png" id="7_d5xjd"]
+[ext_resource type="AudioStream" uid="uid://d2jw2jo3o1w1n" path="res://Sounds/High-Tech Gadget Activate.wav" id="8_e65xt"]
 
-[node name="Main" type="Node2D"]
+[sub_resource type="LabelSettings" id="LabelSettings_8spaw"]
+font_size = 48
+font_color = Color(0, 0.709804, 0.792157, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 15
+shadow_color = Color(0, 0, 0, 0.47451)
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yb5d0"]
+size = Vector2(1152, 20)
+
+[sub_resource type="LabelSettings" id="LabelSettings_xwq36"]
+font_size = 24
+font_color = Color(1, 0.0117647, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_h2te0"]
+font_size = 48
+font_color = Color(0, 0.709804, 0.792157, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 15
+shadow_color = Color(0, 0, 0, 0.47451)
+shadow_offset = Vector2(3, 3)
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("menu", "endDisplay", "background", "timer", "timerLabel", "scoreLabel", "endScoreLabel", "playSound", "backgroundSound")]
 script = ExtResource("1_3xcx5")
+menu = NodePath("MainMenu")
+endDisplay = NodePath("end display")
+background = NodePath("Background")
+timer = NodePath("Timer")
+timerLabel = NodePath("timerLabel")
+scoreLabel = NodePath("scoreLabel")
+endScoreLabel = NodePath("end display/Control2/score")
+playSound = NodePath("end display/Control2/gomenu/PlaySound")
+backgroundSound = NodePath("background music")
+playerScene = ExtResource("2_ajqml")
+asteroidScene = ExtResource("3_xmfx8")
+initialTime = 10
 
 [node name="Background" type="Sprite2D" parent="."]
 texture = ExtResource("2_e1jkw")
 
-[node name="MainMenu" parent="." instance=ExtResource("3_neka4")]
+[node name="MainMenu" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="backgroundclear" type="Control" parent="MainMenu"]
+modulate = Color(1, 1, 1, 0.431373)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuBackground" type="TextureRect" parent="MainMenu/backgroundclear"]
+layout_mode = 0
+offset_right = 4096.0
+offset_bottom = 4096.0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_e1jkw")
+
+[node name="Control" type="Control" parent="MainMenu"]
+layout_mode = 1
+anchor_top = 0.3
+anchor_right = 1.0
+anchor_bottom = 0.6
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="MainMenu/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -109.0
+offset_right = 109.0
+offset_bottom = 70.0
+grow_horizontal = 2
+text = "Space Fighter"
+label_settings = SubResource("LabelSettings_8spaw")
+
+[node name="TextureButton" type="TextureButton" parent="MainMenu/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -105.0
+offset_top = -210.0
+offset_right = 105.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(105, 210)
+action_mode = 0
+texture_normal = ExtResource("5_5evu4")
+texture_pressed = ExtResource("6_vypgd")
+stretch_mode = 0
+
+[node name="PlaySound" type="AudioStreamPlayer" parent="MainMenu/Control/TextureButton"]
+stream = ExtResource("8_e65xt")
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="Wall" type="StaticBody2D" parent="Walls"]
+position = Vector2(576, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall"]
+shape = SubResource("RectangleShape2D_yb5d0")
+
+[node name="Wall2" type="StaticBody2D" parent="Walls"]
+position = Vector2(576, 648)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall2"]
+shape = SubResource("RectangleShape2D_yb5d0")
+
+[node name="Wall3" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, 324)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall3"]
+shape = SubResource("RectangleShape2D_yb5d0")
+
+[node name="Wall4" type="StaticBody2D" parent="Walls"]
+position = Vector2(1152, 324)
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Wall4"]
+shape = SubResource("RectangleShape2D_yb5d0")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 60.0
+one_shot = true
+
+[node name="timerLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 34.0
+label_settings = SubResource("LabelSettings_xwq36")
+
+[node name="scoreLabel" type="Label" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 1050.0
+offset_right = 1090.0
+offset_bottom = 34.0
+grow_horizontal = 0
+label_settings = SubResource("LabelSettings_xwq36")
+
+[node name="background music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_fdfws")
+
+[node name="end display" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control2" type="Control" parent="end display"]
+layout_mode = 1
+anchor_top = 0.2
+anchor_right = 1.0
+anchor_bottom = 0.6
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="end display/Control2"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -109.0
+offset_right = 109.0
+offset_bottom = 70.0
+grow_horizontal = 2
+text = "Game Over"
+label_settings = SubResource("LabelSettings_h2te0")
+
+[node name="score" type="Label" parent="end display/Control2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -131.0
+offset_top = -35.0
+offset_right = 131.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Score: "
+label_settings = SubResource("LabelSettings_h2te0")
+
+[node name="gomenu" type="TextureButton" parent="end display/Control2"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -105.0
+offset_top = -210.0
+offset_right = 105.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(105, 210)
+action_mode = 0
+texture_normal = ExtResource("6_ir0ix")
+texture_pressed = ExtResource("7_d5xjd")
+stretch_mode = 0
+
+[node name="PlaySound" type="AudioStreamPlayer" parent="end display/Control2/gomenu"]
+stream = ExtResource("8_e65xt")
+
+[connection signal="button_up" from="MainMenu/Control/TextureButton" to="." method="_on_texture_button_button_up"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="finished" from="background music" to="." method="_on_background_music_finished"]
+[connection signal="button_up" from="end display/Control2/gomenu" to="." method="_on_gomenu_button_up"]

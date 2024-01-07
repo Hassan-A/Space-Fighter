@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c04bjm5ocxtb7"]
+[gd_scene load_steps=14 format=3 uid="uid://be2k6iy3m1qbb"]
 
 [ext_resource type="Script" path="res://scripts/asteroid.gd" id="1_sr0yn"]
 [ext_resource type="Texture2D" uid="uid://b0sngjmcvnk68" path="res://Sprites/Asteroid 01 - Explode.png" id="1_uc1ui"]
@@ -91,4 +91,9 @@ animation = &"Idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_1ljms")
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
