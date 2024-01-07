@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://be2k6iy3m1qbb"]
+[gd_scene load_steps=15 format=3 uid="uid://be2k6iy3m1qbb"]
 
 [ext_resource type="Script" path="res://scripts/asteroid.gd" id="1_sr0yn"]
 [ext_resource type="Texture2D" uid="uid://b0sngjmcvnk68" path="res://Sprites/Asteroid 01 - Explode.png" id="1_uc1ui"]
 [ext_resource type="Texture2D" uid="uid://drojpfxdej27f" path="res://Sprites/Asteroid 01 - Base.png" id="2_d050q"]
+[ext_resource type="AudioStream" uid="uid://bjnqrwn41kj67" path="res://Sounds/EXPLDsgn_Explosion Impact_14.wav" id="4_rinxn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xq77k"]
 atlas = ExtResource("1_uc1ui")
@@ -64,7 +65,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_st4qs")
 }],
 "loop": true,
-"name": &"Expload",
+"name": &"Explode",
 "speed": 10.0
 }, {
 "frames": [{
@@ -79,21 +80,25 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_1ljms"]
 radius = 19.0263
 
-[node name="asteroid" type="StaticBody2D"]
+[node name="asteroid" type="StaticBody2D" node_paths=PackedStringArray("sprite", "explodeSound", "colShape")]
 collision_layer = 6
 collision_mask = 6
 script = ExtResource("1_sr0yn")
+sprite = NodePath("AnimatedSprite2D")
+explodeSound = NodePath("AudioStreamPlayer")
+colShape = NodePath("CollisionShape2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_qqfup")
-animation = &"Idle"
+animation = &"Explode"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_1ljms")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_rinxn")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
