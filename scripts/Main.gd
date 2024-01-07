@@ -1,11 +1,22 @@
 extends Node2D
 
 @export var menu : Control
+@export var endDisplay : Control
 @export var background : Sprite2D
+@export var timer : Timer
+@export var timerLabel : Label
+@export var scoreLabel : Label
+@export var endScoreLabel : Label
+@export var playSound : AudioStreamPlayer
+@export var backgroundSound : AudioStreamPlayer
+@export var spaceShipMoveSound : AudioStreamPlayer
+@export var spaceShipFireSound : AudioStreamPlayer
 @export var playerScene : Resource
 @export var asteroidScene : Resource
+@export var initialTime : int
 var player : CharacterBody2D
 var random = RandomNumberGenerator.new()
+var score = 0
 var astroidCount = 0
 var astroidDict : Dictionary
 
@@ -19,22 +30,33 @@ func _ready():
 func start_menu():
 	set_process(false)
 	set_visiblity(menu,true)
+	set_visiblity(endDisplay, false)
 	set_visiblity(background, false)
+	set_visiblity(scoreLabel,false)
+	set_visiblity(timerLabel,false)
+	score = 0
 
 func _on_texture_button_button_up():
+	playSound.play()
 	start_game()
 
 func set_visiblity(node,visiblity):
 	node.visible = visiblity
 
 func start_game():
+	backgroundSound.play()
+	set_visiblity(timerLabel,true)
 	set_visiblity(background, true)
 	set_visiblity(menu,false)
+	set_visiblity(scoreLabel,true)
+	set_visiblity(timerLabel,true)
+	timer.start(initialTime)
 	spawn_player()
 	set_process(true)
 
 func spawn_player():
 	player = playerScene.instantiate()
+	player.connect("game_over",game_over)
 	player.connect("add_bullet",bullets)
 	add_child(player)
 	player.position = Vector2(600,400)
@@ -43,7 +65,12 @@ func bullets(b):
 	add_child(b)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	change_texts()
 	create_asteroids()
+
+func change_texts():
+	timerLabel.text = str(int(timer.time_left))
+	scoreLabel.text = str(score)
 
 func create_asteroids():
 	if(astroidCount < 10):
@@ -61,8 +88,16 @@ func create_asteroids():
 		ast.position = startingPosition
 		ast.set_direction(Vector2(random.randf_range(-1,1),random.randf_range(-1,1)))
 		ast.connect("destroyed", asteroidGone)
+		ast.connect("addScore", add_score)
 
 func asteroidGone(ast):
 	astroidDict.erase(ast)
 	astroidCount -= 1
 
+func add_score():
+	score += 1
+
+func _on_gomenu_button_up():
+	playSound.play()
+	backgroundSound.stop()
+	start_menu()

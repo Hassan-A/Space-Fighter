@@ -6,6 +6,7 @@
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_3xcx5")
+initialTime = null
 
 [node name="Background" type="Sprite2D" parent="."]
 texture = ExtResource("2_e1jkw")
