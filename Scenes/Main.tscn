@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://csykuhqbj2bjr"]
+[gd_scene load_steps=4 format=3 uid="uid://csykuhqbj2bjr"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_3xcx5"]
 [ext_resource type="Texture2D" uid="uid://b2n6wqlnjty5x" path="res://Sprites/Nebula Aqua-Pink.png" id="2_e1jkw"]
+[ext_resource type="PackedScene" uid="uid://buec6hwl16oxf" path="res://Prefabs/main_menu.tscn" id="3_neka4"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_3xcx5")
 
 [node name="Background" type="Sprite2D" parent="."]
 texture = ExtResource("2_e1jkw")
+
+[node name="MainMenu" parent="." instance=ExtResource("3_neka4")]
