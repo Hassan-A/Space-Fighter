@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://csykuhqbj2bjr"]
+[gd_scene load_steps=16 format=3 uid="uid://csykuhqbj2bjr"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_3xcx5"]
 [ext_resource type="PackedScene" uid="uid://b2icotkbwu454" path="res://Prefabs/player.tscn" id="2_ajqml"]
 [ext_resource type="Texture2D" uid="uid://b2n6wqlnjty5x" path="res://Sprites/Nebula Aqua-Pink.png" id="2_e1jkw"]
 [ext_resource type="PackedScene" uid="uid://be2k6iy3m1qbb" path="res://Prefabs/asteroid.tscn" id="3_xmfx8"]
+[ext_resource type="Texture2D" uid="uid://xs5se4j8ylga" path="res://Sprites/Nebula Red.png" id="4_ff21o"]
 [ext_resource type="Texture2D" uid="uid://bl6g5xmx2oea0" path="res://Sprites/Play_BTN.png" id="5_5evu4"]
 [ext_resource type="AudioStream" uid="uid://ck150k6n20jb4" path="res://Sounds/AMBIENCE_TUNNEL_WIND_LOOP.wav" id="5_fdfws"]
 [ext_resource type="Texture2D" uid="uid://dfgin44xskwus" path="res://Sprites/Menu_BTN.png" id="6_ir0ix"]
@@ -81,7 +82,7 @@ layout_mode = 0
 offset_right = 4096.0
 offset_bottom = 4096.0
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("2_e1jkw")
+texture = ExtResource("4_ff21o")
 
 [node name="Control" type="Control" parent="MainMenu"]
 layout_mode = 1
