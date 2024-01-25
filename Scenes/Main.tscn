@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://csykuhqbj2bjr"]
+[gd_scene load_steps=17 format=3 uid="uid://csykuhqbj2bjr"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_3xcx5"]
 [ext_resource type="PackedScene" uid="uid://b2icotkbwu454" path="res://Prefabs/player.tscn" id="2_ajqml"]
@@ -12,6 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://dstiukm6irxe3" path="res://Sprites/Menu_BTN_active.png" id="7_d5xjd"]
 [ext_resource type="AudioStream" uid="uid://d2jw2jo3o1w1n" path="res://Sounds/High-Tech Gadget Activate.wav" id="8_e65xt"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_xwq36"]
+font_size = 24
+font_color = Color(1, 0.0117647, 0, 1)
+
 [sub_resource type="LabelSettings" id="LabelSettings_8spaw"]
 font_size = 48
 font_color = Color(0, 0.709804, 0.792157, 1)
@@ -24,12 +28,17 @@ shadow_offset = Vector2(3, 3)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yb5d0"]
 size = Vector2(1152, 20)
 
-[sub_resource type="LabelSettings" id="LabelSettings_xwq36"]
-font_size = 24
-font_color = Color(1, 0.0117647, 0, 1)
-
 [sub_resource type="LabelSettings" id="LabelSettings_h2te0"]
 font_size = 48
+font_color = Color(0, 0.709804, 0.792157, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 15
+shadow_color = Color(0, 0, 0, 0.47451)
+shadow_offset = Vector2(3, 3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_yeupy"]
+font_size = 35
 font_color = Color(0, 0.709804, 0.792157, 1)
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
@@ -43,10 +52,10 @@ menu = NodePath("MainMenu")
 endDisplay = NodePath("end display")
 background = NodePath("Background")
 timer = NodePath("Timer")
-timerLabel = NodePath("timerLabel")
-scoreLabel = NodePath("scoreLabel")
-endScoreLabel = NodePath("end display/Control2/score")
-playSound = NodePath("end display/Control2/gomenu/PlaySound")
+timerLabel = NodePath("InGameLabels/VBoxContainer/HBoxContainer/timerLabel")
+scoreLabel = NodePath("InGameLabels/VBoxContainer/HBoxContainer/scoreLabel")
+endScoreLabel = NodePath("end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer/score")
+playSound = NodePath("end display/Control2/VBoxContainer/Control/gomenu/PlaySound")
 backgroundSound = NodePath("background music")
 playerScene = ExtResource("2_ajqml")
 asteroidScene = ExtResource("3_xmfx8")
@@ -54,6 +63,69 @@ initialTime = 10
 
 [node name="Background" type="Sprite2D" parent="."]
 texture = ExtResource("2_e1jkw")
+
+[node name="InGameLabels" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InGameLabels"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="InGameLabels/VBoxContainer"]
+modulate = Color(0.360784, 0.360784, 0.360784, 0.454902)
+self_modulate = Color(0.556863, 0.556863, 0.556863, 0.517647)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="HBoxContainer" type="HBoxContainer" parent="InGameLabels/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="Control2" type="Control" parent="InGameLabels/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="timerLabel" type="Label" parent="InGameLabels/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.15
+text = "Time: "
+label_settings = SubResource("LabelSettings_xwq36")
+
+[node name="Control" type="Control" parent="InGameLabels/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
+
+[node name="scoreLabel" type="Label" parent="InGameLabels/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.15
+text = "Score: "
+label_settings = SubResource("LabelSettings_xwq36")
+
+[node name="Control3" type="Control" parent="InGameLabels/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Control2" type="Control" parent="InGameLabels/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 
 [node name="MainMenu" type="Control" parent="."]
 layout_mode = 3
@@ -158,21 +230,6 @@ shape = SubResource("RectangleShape2D_yb5d0")
 wait_time = 60.0
 one_shot = true
 
-[node name="timerLabel" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 34.0
-label_settings = SubResource("LabelSettings_xwq36")
-
-[node name="scoreLabel" type="Label" parent="."]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = 1050.0
-offset_right = 1090.0
-offset_bottom = 34.0
-grow_horizontal = 0
-label_settings = SubResource("LabelSettings_xwq36")
-
 [node name="background music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_fdfws")
 
@@ -188,63 +245,224 @@ grow_vertical = 2
 
 [node name="Control2" type="Control" parent="end display"]
 layout_mode = 1
-anchor_top = 0.2
+anchor_top = 0.1
 anchor_right = 1.0
-anchor_bottom = 0.6
+anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="end display/Control2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="end display/Control2"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -109.0
-offset_right = 109.0
-offset_bottom = 70.0
-grow_horizontal = 2
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.495972
+offset_bottom = -0.020813
+
+[node name="Label" type="Label" parent="end display/Control2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
 text = "Game Over"
 label_settings = SubResource("LabelSettings_h2te0")
 
-[node name="score" type="Label" parent="end display/Control2"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -131.0
-offset_top = -35.0
-offset_right = 131.0
-offset_bottom = 35.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Score: "
-label_settings = SubResource("LabelSettings_h2te0")
+[node name="highscore label" type="Label" parent="end display/Control2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "HighScores"
+label_settings = SubResource("LabelSettings_yeupy")
 
-[node name="gomenu" type="TextureButton" parent="end display/Control2"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -105.0
-offset_top = -210.0
-offset_right = 105.0
+[node name="HBoxContainer" type="HBoxContainer" parent="end display/Control2/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="end display/Control2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 0.1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="score" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "01."
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="score2" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "02."
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="score3" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "03."
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="score4" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "04."
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="score5" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "05."
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="scoreT" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="scoreT2" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="scoreT3" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="scoreT4" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="scoreT5" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="end display/Control2/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control2" type="Control" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 0.1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="score" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 3
+text = "06."
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="score2" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 3
+text = "07."
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="score3" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 3
+text = "08."
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="score4" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 3
+text = "09."
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="score5" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 3
+text = "10. "
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="scoreT" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer2/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="scoreT2" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer2/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="scoreT3" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer2/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="scoreT4" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer2/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="scoreT5" type="Label" parent="end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer2/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+label_settings = SubResource("LabelSettings_yeupy")
+
+[node name="Control" type="Control" parent="end display/Control2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
+
+[node name="gomenu" type="TextureButton" parent="end display/Control2/VBoxContainer/Control"]
+layout_mode = 2
+offset_right = 210.0
+offset_bottom = 210.0
 grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(0.5, 0.5)
-pivot_offset = Vector2(105, 210)
+pivot_offset = Vector2(-105, -210)
+size_flags_horizontal = 4
+size_flags_vertical = 8
 action_mode = 0
 texture_normal = ExtResource("6_ir0ix")
 texture_pressed = ExtResource("7_d5xjd")
 stretch_mode = 0
 
-[node name="PlaySound" type="AudioStreamPlayer" parent="end display/Control2/gomenu"]
+[node name="PlaySound" type="AudioStreamPlayer" parent="end display/Control2/VBoxContainer/Control/gomenu"]
 stream = ExtResource("8_e65xt")
 
 [connection signal="button_up" from="MainMenu/Control/TextureButton" to="." method="_on_texture_button_button_up"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="finished" from="background music" to="." method="_on_background_music_finished"]
-[connection signal="button_up" from="end display/Control2/gomenu" to="." method="_on_gomenu_button_up"]
+[connection signal="button_up" from="end display/Control2/VBoxContainer/Control/gomenu" to="." method="_on_gomenu_button_up"]

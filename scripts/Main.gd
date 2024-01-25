@@ -17,8 +17,10 @@ extends Node2D
 var player : CharacterBody2D
 var random = RandomNumberGenerator.new()
 var score = 0
+var scoreArray : Array
 var astroidCount = 0
 var astroidDict : Dictionary
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -103,14 +105,25 @@ func _on_timer_timeout():
 func game_over():
 	timer.stop()
 	set_process(false)
-	endScoreLabel.text = "Score: " + str(score)
+	scoreArray.append(score)
+	setHighScores()
 	set_visiblity(endDisplay,true)
+	player.get_child(1).set_deferred("disabled",true)
 	player.queue_free()
 	for ast in astroidDict:
 		ast.queue_free()
 		astroidCount -= 1
 	astroidDict.clear()
 	#display button to main menu
+func setHighScores():
+	scoreArray.sort()
+	scoreArray.reverse()
+	var scorelist = endDisplay.find_children("scoreT*")
+	for i in range(scoreArray.size()):
+		if(i >= 10):
+			break
+		scorelist[i].text = " " + str(scoreArray[i])
+
 
 func _on_gomenu_button_up():
 	playSound.play()

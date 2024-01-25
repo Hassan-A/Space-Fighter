@@ -63,3 +63,4 @@ func _physics_process(delta):
 		if(collision.get_collider().get_collision_layer() == 6):
 			collision.get_collider().explode()
 			emit_signal("game_over")
+			break
