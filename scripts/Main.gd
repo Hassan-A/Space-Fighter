@@ -7,6 +7,8 @@ extends Node2D
 @export var timerLabel : Label
 @export var scoreLabel : Label
 @export var endScoreLabel : Label
+@export var inGameLabels : Control
+@export var progress : ProgressBar
 @export var playSound : AudioStreamPlayer
 @export var backgroundSound : AudioStreamPlayer
 @export var spaceShipMoveSound : AudioStreamPlayer
@@ -14,12 +16,17 @@ extends Node2D
 @export var playerScene : Resource
 @export var asteroidScene : Resource
 @export var initialTime : int = 60
+
 var player : CharacterBody2D
 var random = RandomNumberGenerator.new()
 var score = 0
 var scoreArray : Array
 var astroidCount = 0
 var astroidDict : Dictionary
+var exp : int:
+	set(v): 
+		exp = v
+		progress.value = exp
 
 
 # Called when the node enters the scene tree for the first time.
@@ -34,9 +41,11 @@ func start_menu():
 	set_visiblity(menu,true)
 	set_visiblity(endDisplay, false)
 	set_visiblity(background, false)
-	set_visiblity(scoreLabel,false)
-	set_visiblity(timerLabel,false)
+	set_visiblity(scoreLabel, false)
+	set_visiblity(timerLabel, false)
+	set_visiblity(inGameLabels, false)
 	score = 0
+	exp = 0
 
 func _on_texture_button_button_up():
 	playSound.play()
@@ -52,6 +61,7 @@ func start_game():
 	set_visiblity(menu,false)
 	set_visiblity(scoreLabel,true)
 	set_visiblity(timerLabel,true)
+	set_visiblity(inGameLabels, true)
 	timer.start(initialTime)
 	spawn_player()
 	set_process(true)
@@ -71,8 +81,8 @@ func _process(delta):
 	create_asteroids()
 
 func change_texts():
-	timerLabel.text = str(int(timer.time_left))
-	scoreLabel.text = str(score)
+	timerLabel.text = "Time: " + str(int(timer.time_left))
+	scoreLabel.text = "Score: " + str(score)
 
 func create_asteroids():
 	if(astroidCount < 10):
@@ -98,6 +108,13 @@ func asteroidGone(ast):
 
 func add_score():
 	score += 1
+	add_exp()
+
+func add_exp():
+	exp += 1
+	if(exp == 10):
+		#initiateUpgrade
+		exp = 0
 
 func _on_timer_timeout():
 	game_over()

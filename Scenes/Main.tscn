@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://csykuhqbj2bjr"]
+[gd_scene load_steps=20 format=3 uid="uid://csykuhqbj2bjr"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_3xcx5"]
 [ext_resource type="PackedScene" uid="uid://b2icotkbwu454" path="res://Prefabs/player.tscn" id="2_ajqml"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://xs5se4j8ylga" path="res://Sprites/Nebula Red.png" id="4_ff21o"]
 [ext_resource type="Texture2D" uid="uid://bl6g5xmx2oea0" path="res://Sprites/Play_BTN.png" id="5_5evu4"]
 [ext_resource type="AudioStream" uid="uid://ck150k6n20jb4" path="res://Sounds/AMBIENCE_TUNNEL_WIND_LOOP.wav" id="5_fdfws"]
+[ext_resource type="Texture2D" uid="uid://brln3lbmw2xdt" path="res://white.png" id="5_ycrj6"]
 [ext_resource type="Texture2D" uid="uid://dfgin44xskwus" path="res://Sprites/Menu_BTN.png" id="6_ir0ix"]
 [ext_resource type="Texture2D" uid="uid://b0qxmcpyn1lqk" path="res://Sprites/Play_BTN_active.png" id="6_vypgd"]
 [ext_resource type="Texture2D" uid="uid://dstiukm6irxe3" path="res://Sprites/Menu_BTN_active.png" id="7_d5xjd"]
@@ -14,7 +15,13 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_xwq36"]
 font_size = 24
-font_color = Color(1, 0.0117647, 0, 1)
+font_color = Color(0, 0.0117647, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_83ex4"]
+bg_color = Color(0, 0.956863, 0.835294, 0.580392)
+
+[sub_resource type="Theme" id="Theme_44huk"]
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_83ex4")
 
 [sub_resource type="LabelSettings" id="LabelSettings_8spaw"]
 font_size = 48
@@ -46,7 +53,7 @@ shadow_size = 15
 shadow_color = Color(0, 0, 0, 0.47451)
 shadow_offset = Vector2(3, 3)
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("menu", "endDisplay", "background", "timer", "timerLabel", "scoreLabel", "endScoreLabel", "playSound", "backgroundSound")]
+[node name="Main" type="Node2D" node_paths=PackedStringArray("menu", "endDisplay", "background", "timer", "timerLabel", "scoreLabel", "endScoreLabel", "inGameLabels", "progress", "playSound", "backgroundSound")]
 script = ExtResource("1_3xcx5")
 menu = NodePath("MainMenu")
 endDisplay = NodePath("end display")
@@ -55,6 +62,8 @@ timer = NodePath("Timer")
 timerLabel = NodePath("InGameLabels/VBoxContainer/HBoxContainer/timerLabel")
 scoreLabel = NodePath("InGameLabels/VBoxContainer/HBoxContainer/scoreLabel")
 endScoreLabel = NodePath("end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer/score")
+inGameLabels = NodePath("InGameLabels")
+progress = NodePath("InGameLabels/VBoxContainer/HBoxContainer/Control/HBoxContainer/Control/ProgressBar")
 playSound = NodePath("end display/Control2/VBoxContainer/Control/gomenu/PlaySound")
 backgroundSound = NodePath("background music")
 playerScene = ExtResource("2_ajqml")
@@ -81,11 +90,19 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Control" type="Control" parent="InGameLabels/VBoxContainer"]
-modulate = Color(0.360784, 0.360784, 0.360784, 0.454902)
-self_modulate = Color(0.556863, 0.556863, 0.556863, 0.517647)
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.05
+size_flags_stretch_ratio = 0.02
+
+[node name="TextureRect" type="TextureRect" parent="InGameLabels/VBoxContainer/Control"]
+modulate = Color(1, 1, 1, 0.47451)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+texture = ExtResource("5_ycrj6")
+expand_mode = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="InGameLabels/VBoxContainer"]
 layout_mode = 2
@@ -105,10 +122,46 @@ size_flags_stretch_ratio = 0.15
 text = "Time: "
 label_settings = SubResource("LabelSettings_xwq36")
 
-[node name="Control" type="Control" parent="InGameLabels/VBoxContainer/HBoxContainer"]
+[node name="Control" type="VBoxContainer" parent="InGameLabels/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="InGameLabels/VBoxContainer/HBoxContainer/Control"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control3" type="Control" parent="InGameLabels/VBoxContainer/HBoxContainer/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="Control" type="Control" parent="InGameLabels/VBoxContainer/HBoxContainer/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ProgressBar" type="ProgressBar" parent="InGameLabels/VBoxContainer/HBoxContainer/Control/HBoxContainer/Control"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_44huk")
+max_value = 10.0
+step = 1.0
+value = 7.0
+
+[node name="Control2" type="Control" parent="InGameLabels/VBoxContainer/HBoxContainer/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
+
+[node name="Control" type="Control" parent="InGameLabels/VBoxContainer/HBoxContainer/Control"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
 
 [node name="scoreLabel" type="Label" parent="InGameLabels/VBoxContainer/HBoxContainer"]
 layout_mode = 2
