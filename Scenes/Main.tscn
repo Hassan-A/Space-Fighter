@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://csykuhqbj2bjr"]
+[gd_scene load_steps=24 format=3 uid="uid://csykuhqbj2bjr"]
 
 [ext_resource type="Script" path="res://scripts/Main.gd" id="1_3xcx5"]
 [ext_resource type="PackedScene" uid="uid://b2icotkbwu454" path="res://Prefabs/player.tscn" id="2_ajqml"]
@@ -7,11 +7,12 @@
 [ext_resource type="Texture2D" uid="uid://xs5se4j8ylga" path="res://Sprites/Nebula Red.png" id="4_ff21o"]
 [ext_resource type="Texture2D" uid="uid://bl6g5xmx2oea0" path="res://Sprites/Play_BTN.png" id="5_5evu4"]
 [ext_resource type="AudioStream" uid="uid://ck150k6n20jb4" path="res://Sounds/AMBIENCE_TUNNEL_WIND_LOOP.wav" id="5_fdfws"]
-[ext_resource type="Texture2D" uid="uid://brln3lbmw2xdt" path="res://white.png" id="5_ycrj6"]
+[ext_resource type="Texture2D" path="res://white.png" id="5_ycrj6"]
 [ext_resource type="Texture2D" uid="uid://dfgin44xskwus" path="res://Sprites/Menu_BTN.png" id="6_ir0ix"]
 [ext_resource type="Texture2D" uid="uid://b0qxmcpyn1lqk" path="res://Sprites/Play_BTN_active.png" id="6_vypgd"]
 [ext_resource type="Texture2D" uid="uid://dstiukm6irxe3" path="res://Sprites/Menu_BTN_active.png" id="7_d5xjd"]
 [ext_resource type="AudioStream" uid="uid://d2jw2jo3o1w1n" path="res://Sounds/High-Tech Gadget Activate.wav" id="8_e65xt"]
+[ext_resource type="Texture2D" uid="uid://ygspx1ewlmse" path="res://Sprites/sel.png" id="13_u2t7k"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xwq36"]
 font_size = 24
@@ -53,7 +54,21 @@ shadow_size = 15
 shadow_color = Color(0, 0, 0, 0.47451)
 shadow_offset = Vector2(3, 3)
 
-[node name="Main" type="Node2D" node_paths=PackedStringArray("menu", "endDisplay", "background", "timer", "timerLabel", "scoreLabel", "endScoreLabel", "inGameLabels", "progress", "playSound", "backgroundSound")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_khy5x"]
+bg_color = Color(0.0901961, 0.0862745, 0.498039, 0.945098)
+
+[sub_resource type="Theme" id="Theme_laqk6"]
+Label/styles/normal = SubResource("StyleBoxFlat_khy5x")
+
+[sub_resource type="LabelSettings" id="LabelSettings_sitiv"]
+font_size = 42
+font_color = Color(1, 0, 1, 1)
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 10
+shadow_color = Color(0, 0, 0, 0.490196)
+shadow_offset = Vector2(3, 3)
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("menu", "endDisplay", "background", "timer", "timerLabel", "scoreLabel", "endScoreLabel", "inGameLabels", "upgradesUI", "progress", "playSound", "backgroundSound", "ul1", "ul2", "ul3", "selection")]
 script = ExtResource("1_3xcx5")
 menu = NodePath("MainMenu")
 endDisplay = NodePath("end display")
@@ -63,12 +78,17 @@ timerLabel = NodePath("InGameLabels/VBoxContainer/HBoxContainer/timerLabel")
 scoreLabel = NodePath("InGameLabels/VBoxContainer/HBoxContainer/scoreLabel")
 endScoreLabel = NodePath("end display/Control2/VBoxContainer/HBoxContainer/HBoxContainer/VBoxContainer/score")
 inGameLabels = NodePath("InGameLabels")
+upgradesUI = NodePath("Upgrades")
 progress = NodePath("InGameLabels/VBoxContainer/HBoxContainer/Control/HBoxContainer/Control/ProgressBar")
 playSound = NodePath("end display/Control2/VBoxContainer/Control/gomenu/PlaySound")
 backgroundSound = NodePath("background music")
 playerScene = ExtResource("2_ajqml")
 asteroidScene = ExtResource("3_xmfx8")
 initialTime = 10
+ul1 = NodePath("Upgrades/BoxContainer/HBoxContainer/VBoxContainer/UpgradeOption1")
+ul2 = NodePath("Upgrades/BoxContainer/HBoxContainer/VBoxContainer/UpgradeOption2")
+ul3 = NodePath("Upgrades/BoxContainer/HBoxContainer/VBoxContainer/UpgradeOption3")
+selection = NodePath("Upgrades/BoxContainer/HBoxContainer/VBoxContainer/UpgradeOption1/Selection")
 
 [node name="Background" type="Sprite2D" parent="."]
 texture = ExtResource("2_e1jkw")
@@ -514,6 +534,98 @@ stretch_mode = 0
 
 [node name="PlaySound" type="AudioStreamPlayer" parent="end display/Control2/VBoxContainer/Control/gomenu"]
 stream = ExtResource("8_e65xt")
+
+[node name="Upgrades" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BoxContainer" type="BoxContainer" parent="Upgrades"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control2" type="Control" parent="Upgrades/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="HBoxContainer" type="VBoxContainer" parent="Upgrades/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+
+[node name="Control" type="Control" parent="Upgrades/BoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Upgrades/BoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 6.0
+
+[node name="UpgradeOption1" type="Label" parent="Upgrades/BoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.33
+theme = SubResource("Theme_laqk6")
+text = "Upgrade 1"
+label_settings = SubResource("LabelSettings_sitiv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Selection" type="TextureRect" parent="Upgrades/BoxContainer/HBoxContainer/VBoxContainer/UpgradeOption1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 6.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_u2t7k")
+
+[node name="UpgradeOption2" type="Label" parent="Upgrades/BoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.33
+theme = SubResource("Theme_laqk6")
+text = "Upgrade 1"
+label_settings = SubResource("LabelSettings_sitiv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UpgradeOption3" type="Label" parent="Upgrades/BoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.33
+theme = SubResource("Theme_laqk6")
+text = "Upgrade 1"
+label_settings = SubResource("LabelSettings_sitiv")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control2" type="Control" parent="Upgrades/BoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="Control" type="Control" parent="Upgrades/BoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
 
 [connection signal="button_up" from="MainMenu/Control/TextureButton" to="." method="_on_texture_button_button_up"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

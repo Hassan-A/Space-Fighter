@@ -8,6 +8,7 @@ extends Node2D
 @export var scoreLabel : Label
 @export var endScoreLabel : Label
 @export var inGameLabels : Control
+@export var upgradesUI : Control
 @export var progress : ProgressBar
 @export var playSound : AudioStreamPlayer
 @export var backgroundSound : AudioStreamPlayer
@@ -17,20 +18,35 @@ extends Node2D
 @export var asteroidScene : Resource
 @export var initialTime : int = 60
 
+@export var ul1 : Label
+@export var ul2 : Label
+@export var ul3 : Label
+@export var selection : TextureRect
+
+var labelArray : Array
+var currentSelection : int: 
+	set(v):
+		currentSelection = v
+		currentSelection %= 3
+		selection.reparent(labelArray[v],false)
+var upgrading : bool = false
+
 var player : CharacterBody2D
 var random = RandomNumberGenerator.new()
 var score = 0
 var scoreArray : Array
 var astroidCount = 0
 var astroidDict : Dictionary
-var exp : int:
+var experience : int = 1:
 	set(v): 
-		exp = v
-		progress.value = exp
+		experience = v
+		progress.value = experience
 
+enum upgrades{ time, movement_speed, rotation_speed, weapon_orbit, weapon_slash }
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	labelArray = [ul1,ul2,ul3]
 	random.randomize()
 	playerScene = preload("res://Prefabs/player.tscn")
 	asteroidScene = preload("res://Prefabs/asteroid.tscn")
@@ -44,8 +60,9 @@ func start_menu():
 	set_visiblity(scoreLabel, false)
 	set_visiblity(timerLabel, false)
 	set_visiblity(inGameLabels, false)
+	set_visiblity(upgradesUI, false)
 	score = 0
-	exp = 0
+	experience = 0
 
 func _on_texture_button_button_up():
 	playSound.play()
@@ -77,6 +94,10 @@ func bullets(b):
 	add_child(b)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if(upgrading):
+		if Input.is_action_pressed("ui_up"):
+			currentSelection -= 1
+		return
 	change_texts()
 	create_asteroids()
 
@@ -111,10 +132,11 @@ func add_score():
 	add_exp()
 
 func add_exp():
-	exp += 1
-	if(exp == 10):
-		#initiateUpgrade
-		exp = 0
+	experience += 1
+	if(experience == 10):
+		upgrading = true
+		set_visiblity(inGameLabels, true)
+		experience = 0
 
 func _on_timer_timeout():
 	game_over()
@@ -125,6 +147,8 @@ func game_over():
 	scoreArray.append(score)
 	setHighScores()
 	set_visiblity(endDisplay,true)
+	set_visiblity(inGameLabels,false)
+	
 	player.get_child(1).set_deferred("disabled",true)
 	player.queue_free()
 	for ast in astroidDict:
