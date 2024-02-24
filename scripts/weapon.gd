@@ -1,11 +1,18 @@
 extends CharacterBody2D
 
-const SPEED = 500.0
+const SPEED = 200.0
 var direction = Vector2(0,0)
+var player : CharacterBody2D
+var radius = 100
+var angle = 0
 
 func _physics_process(delta):
 	velocity = direction * SPEED
-	
+	angle += SPEED * delta
+	var orbit_x = radius * cos(angle) + player.position.x
+	var orbit_y = radius * sin(angle) + player.position.y
+	var orbit_position = Vector2(orbit_x, orbit_y)
+	var direction = (orbit_position - position).normalized()
 	move_and_slide()
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
@@ -14,8 +21,5 @@ func _physics_process(delta):
 			collision.get_collider().add_score()
 			queue_free()
 
-func create(dir):
-	direction = dir
-
-func _on_visible_on_screen_notifier_2d_screen_exited():
-	queue_free()
+func create(p):
+	player = p

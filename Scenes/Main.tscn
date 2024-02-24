@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://xs5se4j8ylga" path="res://Sprites/Nebula Red.png" id="4_ff21o"]
 [ext_resource type="Texture2D" uid="uid://bl6g5xmx2oea0" path="res://Sprites/Play_BTN.png" id="5_5evu4"]
 [ext_resource type="AudioStream" uid="uid://ck150k6n20jb4" path="res://Sounds/AMBIENCE_TUNNEL_WIND_LOOP.wav" id="5_fdfws"]
-[ext_resource type="Texture2D" path="res://white.png" id="5_ycrj6"]
+[ext_resource type="Texture2D" uid="uid://brln3lbmw2xdt" path="res://Sprites/white.png" id="5_ycrj6"]
 [ext_resource type="Texture2D" uid="uid://dfgin44xskwus" path="res://Sprites/Menu_BTN.png" id="6_ir0ix"]
 [ext_resource type="Texture2D" uid="uid://b0qxmcpyn1lqk" path="res://Sprites/Play_BTN_active.png" id="6_vypgd"]
 [ext_resource type="Texture2D" uid="uid://dstiukm6irxe3" path="res://Sprites/Menu_BTN_active.png" id="7_d5xjd"]
@@ -84,7 +84,7 @@ playSound = NodePath("end display/Control2/VBoxContainer/Control/gomenu/PlaySoun
 backgroundSound = NodePath("background music")
 playerScene = ExtResource("2_ajqml")
 asteroidScene = ExtResource("3_xmfx8")
-initialTime = 10
+initialTime = 1000
 ul1 = NodePath("Upgrades/BoxContainer/HBoxContainer/VBoxContainer/UpgradeOption1")
 ul2 = NodePath("Upgrades/BoxContainer/HBoxContainer/VBoxContainer/UpgradeOption2")
 ul3 = NodePath("Upgrades/BoxContainer/HBoxContainer/VBoxContainer/UpgradeOption3")

@@ -24,11 +24,11 @@ extends Node2D
 @export var selection : TextureRect
 
 var labelArray : Array
-var currentSelection : int: 
+var currentSelection : int = 0: 
 	set(v):
 		currentSelection = v
 		currentSelection %= 3
-		selection.reparent(labelArray[v],false)
+		selection.reparent(labelArray[currentSelection],false)
 var upgrading : bool = false
 
 var player : CharacterBody2D
@@ -37,7 +37,7 @@ var score = 0
 var scoreArray : Array
 var astroidCount = 0
 var astroidDict : Dictionary
-var experience : int = 1:
+var experience : int = 0:
 	set(v): 
 		experience = v
 		progress.value = experience
@@ -93,10 +93,26 @@ func spawn_player():
 func bullets(b):
 	add_child(b)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
+func _input(event):
+	if(upgrading):
+		if event.is_action_pressed("ui_up"):
+			currentSelection -= 1
+		if event.is_action_pressed("ui_down"):
+			currentSelection += 1
+		if event.is_action_pressed("ui_accept"):
+			#do upgrade
+			if(currentSelection == 0):
+				timer.wait_time += 20
+			elif(currentSelection == 1):
+				player.SPEED += 10
+			elif(currentSelection == 2):
+				player.upgradeBullet()
+			#resume game
+			upgrading = false
+			set_visiblity(upgradesUI, false)
+
 func _process(delta):
 	if(upgrading):
-		if Input.is_action_pressed("ui_up"):
-			currentSelection -= 1
 		return
 	change_texts()
 	create_asteroids()
@@ -135,8 +151,9 @@ func add_exp():
 	experience += 1
 	if(experience == 10):
 		upgrading = true
-		set_visiblity(inGameLabels, true)
+		set_visiblity(upgradesUI, true)
 		experience = 0
+		#pause game
 
 func _on_timer_timeout():
 	game_over()

@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://dyiusoa4dk3b0"]
+
+[ext_resource type="Script" path="res://scripts/weapon.gd" id="1_dn31s"]
+[ext_resource type="Texture2D" uid="uid://co71uuxj8ehvl" path="res://Sprites/attack4.png" id="2_67mp3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fy37e"]
+radius = 14.9281
+
+[node name="Bullet" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("1_dn31s")
+
+[node name="bulletsprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_67mp3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_fy37e")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

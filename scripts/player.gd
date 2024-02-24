@@ -1,14 +1,24 @@
 extends CharacterBody2D
-var bulletSceen : PackedScene
-const SPEED = 10.0
+var bullet1Sceen : PackedScene
+var bullet3Sceen : PackedScene
+var bullet2Sceen : PackedScene
+var weaponSceen : PackedScene
+var SPEED = 10.0
 var degree = 0
 var xDirection = 1
 var yDirection = -1
 signal game_over
 signal add_bullet
+var bullet : int = 0
+var bulletArray : Array
 
 func _ready():
-	bulletSceen = preload("res://Prefabs/bullet.tscn")
+	bullet1Sceen = preload("res://Prefabs/bullet.tscn")
+	bullet2Sceen = preload("res://Prefabs/bullet2.tscn")
+	bullet3Sceen = preload("res://Prefabs/bullet3.tscn")
+	weaponSceen = preload("res://Prefabs/weapon.tscn")
+	bulletArray = [bullet1Sceen,bullet2Sceen, bullet3Sceen]
+
 func _physics_process(delta):
 	# Handle Jump.
 	var direction = Vector2(0,0)
@@ -39,10 +49,14 @@ func _physics_process(delta):
 		var moveInX = sin(deg_to_rad(degree)) * xDirection
 		var moveInY = cos(deg_to_rad(degree)) * yDirection
 		direction = Vector2(moveInX,moveInY)
+	if Input.is_action_pressed("ui_down"):
+		var moveInX = sin(deg_to_rad(degree)) * xDirection
+		var moveInY = cos(deg_to_rad(degree)) * yDirection
+		direction = Vector2(-moveInX,-moveInY)
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		#instatiate bullet
-		var b = bulletSceen.instantiate()
+		var b = bulletArray[bullet].instantiate()
 		emit_signal("add_bullet",b)
 		b.position = position
 		b.rotation = rotation
@@ -64,3 +78,12 @@ func _physics_process(delta):
 			collision.get_collider().explode()
 			emit_signal("game_over")
 			break
+
+func upgradeBullet():
+	bullet += 1
+	if(bullet > 2):
+		bullet = 3
+
+func activateWeapon():
+	var w = weaponSceen.instantiate()
+	add_child(w)
