@@ -8,7 +8,7 @@ radius = 14.9281
 height = 58.0
 
 [node name="Bullet" type="CharacterBody2D"]
-collision_layer = 4
+collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_86e2q")
 

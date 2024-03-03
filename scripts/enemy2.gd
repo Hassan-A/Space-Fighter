@@ -2,8 +2,8 @@ extends StaticBody2D
 
 
 # Called when the node enters the scene tree for the first time.
-var direction = Vector2(0,0)
-var SPEED = 100.0
+var player : CharacterBody2D
+const SPEED = 300
 @export var sprite : AnimatedSprite2D
 @export var explodeSound : AudioStreamPlayer
 @export var colShape : CollisionShape2D
@@ -14,10 +14,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	position = position + direction * SPEED * delta
+	var direction = (player.position - position).normalized()
+	position += direction * SPEED * delta
 
-func set_direction(new_direction):
-	direction = new_direction
+func set_player(p):
+	player = p
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	colShape.disabled = true

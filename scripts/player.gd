@@ -3,7 +3,7 @@ var bullet1Sceen : PackedScene
 var bullet3Sceen : PackedScene
 var bullet2Sceen : PackedScene
 var weaponSceen : PackedScene
-var SPEED = 10.0
+var SPEED = 20.0
 var degree = 0
 var xDirection = 1
 var yDirection = -1
@@ -84,6 +84,14 @@ func upgradeBullet():
 	if(bullet > 2):
 		bullet = 3
 
+var weapons : Array
 func activateWeapon():
 	var w = weaponSceen.instantiate()
-	add_child(w)
+	weapons.push_back(w)
+	w.position = position - Vector2(50,0)
+	w.create(self)
+	emit_signal("add_bullet",w)
+
+func destroy_weapons():
+	for w in weapons:
+		w.queue_free()
